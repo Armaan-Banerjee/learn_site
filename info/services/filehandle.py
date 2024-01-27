@@ -15,6 +15,6 @@ class FileHandle:
     
     def upload(self):
         url = self.baseurl + "/upload"
-        files = {"upload[]": ""}
-        requests.post(self.file)
+        files = {"upload[]": f"{self.file}"}
+        response = requests.post(url, files=files)
     
