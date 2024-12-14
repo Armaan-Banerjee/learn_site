@@ -23,12 +23,9 @@ class ComentTree:
             matches = []
         
         if root.comment == value:
-            #print(level)
             matches.append((root, level))
-        #print(root.comment)
         for child in root.children:
-            self.depth_first_search(child, value, level + 1)
-        
+            self.depth_first_search(child, value, level + 1, matches)
         return matches
 
     def breadth_first_search(self, root: ComentNode, value) -> [ComentNode]: # type: ignore
@@ -105,7 +102,7 @@ grandchild2_2 = tree.add_child(child2, "2nd reply to 3rd reply")
 grandchild3_1 = tree.add_child(child3, "1st reply to 3rd reply")
 grandchild3_2 = tree.add_child(child3, "2nd reply to 3rd reply")
 
-print(tree.depth_first_search(tree.root, "1st reply to 3rd reply"))
+print(tree.depth_first_search(tree.root, "1st reply to 1st reply"))
 
 comentlist = ComentList()
 comentlist.append(1)
