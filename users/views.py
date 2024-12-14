@@ -67,12 +67,14 @@ def user_dashboard(request):
 
     bookmarks = user.get_bookmarks()
     comments = user.get_comments()
+    flashcards = user.get_flashcards()
 
     template = loader.get_template("dashboard.html")
 
     context = {
         "bookmarks": bookmarks,
-        "comments": comments
+        "comments": comments,
+        "flashcards": flashcards
     }
 
     return HttpResponse(template.render(context=context, request=request))
