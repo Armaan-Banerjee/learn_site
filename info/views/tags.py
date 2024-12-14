@@ -31,13 +31,15 @@ def add_new_tag(request):
 def show_tag_details(request, name, id):
     tag = get_object_or_404(Tags, id=id)
 
-    pages = tag.pages.all()
+    pages = tag.show_pages()
+    flashcards = tag.show_flashcards()
 
     template = loader.get_template("tag_page.html")
 
     context = {
         "tag" : tag,
-        "pages" : pages
+        "pages" : pages,
+        "flashcards": flashcards
     }
 
     return HttpResponse(template.render(context, request))

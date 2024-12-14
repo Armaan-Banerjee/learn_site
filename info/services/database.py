@@ -9,7 +9,7 @@ class Page:
     id: str
     title: str
     data: str
-    tags: [str]
+    tags: [str] # type: ignore
 
 class Repository[T](ABC):
     @abstractmethod

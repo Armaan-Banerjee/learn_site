@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from users.models import User
 from info.services.slugs import slugify
+from info.models import Tags
 
 # Create your models here.
 
@@ -10,6 +11,7 @@ class Flashcard(models.Model):
     title = models.CharField(max_length=255)
     private = models.BooleanField(default=True)
     user = models.ForeignKey("users.User", blank=True, null=True, on_delete=models.CASCADE)
+    tags = models.ManyToManyField("info.Tags", blank=True, related_name="Flashcard")
 
     def __str__(self):
         return f"{self.id} | {self.title}"
@@ -20,6 +22,12 @@ class Flashcard(models.Model):
     
     def all_cards(self):
         return self.keyword_set.all()
+    
+    def add_tag(self, tag_id):
+        tag = Tags.objects.get(id=tag_id)
+        self.tags.add(tag)
+        self.save()
+        return 1
     
     @staticmethod
     def add_flashcard(title, userid, private=True):

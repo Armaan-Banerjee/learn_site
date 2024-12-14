@@ -12,7 +12,8 @@ class Tags(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     pages = models.ManyToManyField("Pages", blank=True, related_name="Tags")
-    details = models.TextField(null=True, blank=True, default="")
+    flashcards = models.ManyToManyField("quizzes.Flashcard", blank=True, related_name="Tags")
+    details = models.TextField(null=True, blank=True, default="") 
     date_created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -78,6 +79,9 @@ class Tags(models.Model):
     
     def show_pages(self):
         return self.pages.all()
+    
+    def show_flashcards(self):
+        return self.flashcards.all()
     
     def __str__(self):
         return f"{self.name}"

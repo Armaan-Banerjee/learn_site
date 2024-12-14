@@ -17,7 +17,7 @@ class ComentTree:
 
         return child
     
-    def depth_first_search(self, root: ComentNode, value: str, level: int=0, matches: list = None) -> [(ComentNode, int)]:
+    def depth_first_search(self, root: ComentNode, value: str, level: int=0, matches: list = None) -> [(ComentNode, int)]: # type: ignore
         
         if matches == None:
             matches = []
@@ -31,7 +31,7 @@ class ComentTree:
         
         return matches
 
-    def breadth_first_search(self, root: ComentNode, value) -> [ComentNode]:
+    def breadth_first_search(self, root: ComentNode, value) -> [ComentNode]: # type: ignore
         matches = []
         queue = [root]
         while queue:
