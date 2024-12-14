@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Banner Example</title>
+    <style>
+        /* Sticky banner styling */
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        .sticky-banner {
+            position: fixed; /* Sticks the banner to the top */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px; /* Height of the banner */
+            background-color: #333; /* Banner background color */
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px; /* Padding inside the banner */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adds shadow for visual separation */
+            z-index: 1000; /* Ensures the banner stays on top */
+        }
+
+        .sticky-banner a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .sticky-banner a:hover {
+            text-decoration: underline; /* Hover effect for links */
+        }
+
+        .content {
+            margin-top: 70px; /* Push content below the sticky banner */
+            padding: 20px;
+        }
+
+        .right-link {
+            padding-right: 30px
+        }
+    </style>
+</head>
+<body>
+    <div class="sticky-banner">
+        <div class="left-link">
+            <a href="/">Home</a>
+        </div>
+        <div class="right-link">
+            {% if user.is_anonymous %}
+                <a href="/accounts/login">Login</a>
+        {% else %}
+            <a href="/dashboard">Dashboard</a>
+        {%endif%}
+        </div>
+    </div>
+    <div class="content">
+        {% block content %}
+        {% endblock%}
+    </div>
+</body>
+</html>

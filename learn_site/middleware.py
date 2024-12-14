@@ -16,7 +16,7 @@ class LoggingMiddleware:
         after_timestamp = time.time()
         delta = after_timestamp - before_timestamp
 
-        logger.info(f"Time delte: {delta}")
+        logger.info(f"Time delta: {delta}")
 
         return response
     

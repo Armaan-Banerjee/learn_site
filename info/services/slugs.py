@@ -15,5 +15,3 @@ def slugify(value: str, allow_unicode=False) -> str:
     
     return re.sub(r"[-\s/]+", "-", value).strip("-_")
 
-test = "Hi/ my name   isJoe"
-print(slugify(test))

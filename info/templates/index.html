@@ -1,6 +1,6 @@
-<head>
-</head>
-<body>
+{% extends "base.html" %}
+ 
+{% block content %}
     <h1>Hi!<h1>
 
     <a href="/page/add"><button>add page</button></a>
@@ -16,4 +16,4 @@
         <li><a href="/tag/{{tag.id}}/{{tag.name}}">{{tag.name}}</a></li>
     {% endfor %}
     </ul>
-</body>
+{% endblock %}

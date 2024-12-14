@@ -1,7 +1,5 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %}
+{% block content %}
         <style>
             .editable-content {
                 width: 100%;
@@ -30,8 +28,7 @@
             }
 
         </style>
-    </head>
-    <body>
+
         {{user.id|json_script:"user_id_json"}}
         {{page.id|json_script:"page_id_json"}}
         <script>
@@ -95,12 +92,6 @@
             }
 
         </script>
-        <a href="/"><button>Go to home</button></a>
-        {% if user.is_anonymous %}
-            <a href="/accounts/login" style="float: right;"><button>Login</button></a>
-        {% else %}
-            <a href="/accounts/logout" style="float: right;"><button>Logout</button></a>
-        {%endif%}
         {% if not bookmarked %}
             <button onclick=bookmark() id="bookmark">Bookmark!</button>
         {% else %}
@@ -149,5 +140,4 @@
             {% endfor %}
             </ul>
         {% endif %}
-    </body>
-</html>
+{% endblock %}

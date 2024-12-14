@@ -1,5 +1,5 @@
-<html>
-    <body>
+{% extends "base.html" %}
+    {% block content %}
         <h1>Hello {{user.username}}</h1>
         <p>You joined on {{user.date_joined}} </p>
 
@@ -25,5 +25,4 @@
         {% else %}
         <p> Create comments to see them here!</p>
         {%endif%}
-    </body>
-</html>
+{% endblock %}
