@@ -29,6 +29,9 @@ class Flashcard(models.Model):
         self.save()
         return 1
     
+    def all_tags(self):
+        return self.tags.all()
+    
     @staticmethod
     def add_flashcard(title, userid, private=True):
         user = User.objects.get(id=userid)

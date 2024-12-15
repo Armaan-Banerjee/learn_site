@@ -1,24 +1,27 @@
-<html>
-    <style>
-        #id_data {
-            width: 100vw;
-        }
-    </style>
-    <body>
-        <h1>Add a page!</h1>
+{% extends "base.html"%}
+{%block title%} Add a page {% endblock%}
+{% block content %}
+<style>
+    #id_data {
+        width: 100vw;
+    }
+</style>
+<h1>Add a page!</h1>
 
-        <form action="/tags/add" method="POST">
-            {% csrf_token %}
-            <ul>{{form_tag.as_ul}}</ul>
-            <input type="submit" value="submit">
-        </form>
-        
-        <form action="" method="POST">
-            {% csrf_token %}
-            <ul>
-                {{form.as_ul}}
-            </ul>
-            <input type="submit" value="Submit">
-        </form>
-    </body>
-</html>
+<h3> Add a tag:</h3>
+<form action="/tags/add" method="POST">
+    {% csrf_token %}
+    <ul>{{form_tag.as_ul}}</ul>
+    <input type="submit" value="submit">
+</form>
+
+<hr>
+<h3> Page details: </h3>
+<form action="" method="POST">
+    {% csrf_token %}
+    <ul>
+        {{form.as_ul}}
+    </ul>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

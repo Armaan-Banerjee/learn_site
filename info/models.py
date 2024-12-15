@@ -48,6 +48,10 @@ class Tags(models.Model):
 
             for page in pages:
                 page.tags.remove(self)
+            
+            flashcards = self.flashcards
+            for card in flashcards:
+                card.tags.remove(self)
 
             self.delete()
 
@@ -106,7 +110,7 @@ class Pages(models.Model):
         return new_page.id
     
     def show_tags(self):
-        return self.Tags.all()
+        return self.Tags.all() 
     
     def add_tag(self, tag_id):
 
@@ -149,6 +153,11 @@ class Comment(models.Model):
         new_comment.save()
 
         return new_comment
+    
+    def delete_comment(self):
+        self.text = "This comment was deleted"
+        self.user = None
+        self.save()
 
 
     

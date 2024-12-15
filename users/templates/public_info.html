@@ -1,11 +1,9 @@
-<html>
-    <body>
-        <a href="/"><button>home</button></a>
-        <h1> {{user.username}} </h1>
+{% extends "base.html"%}
+{% block content %}
 
-        <p> {{user.username}} joined on {{user.date_joined}} </p>
+<h1> {{user.username}} </h1>
 
-        <p>Back to <a href="/user">Glossary</a> </p>
+<p> {{user.username}} joined on {{user.date_joined}} </p>
 
-    </body>
-</html>
+<p>Back to <a href="/user">Glossary</a> </p>
+{% endblock %}

@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from ..models import Flashcard, Keyword, Quiz, QuizQuestion, QuizAnswer
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.text import slugify
+from info.services.slugs import slugify
 # Create your views here.
 
 @csrf_exempt
@@ -15,16 +15,20 @@ def add_flashcard_view(request):
         title = ""
         userid = ""
         cards = []
+        private = True
 
         for key, value in items:
             if key == "title":
                 title = value
             elif key == "userid":
-                userid = value
+                userid = value 
+            elif key == "private":
+                if value != "private":
+                    private = False
             else:
                 cards.append(post.getlist(key))
         
-        new_flashcard = Flashcard.add_flashcard(title=slugify(title), userid=userid)
+        new_flashcard = Flashcard.add_flashcard(title=slugify(title), userid=userid, private=private)
 
         for card in cards:
             front = card[0]
@@ -44,6 +48,8 @@ def add_flashcard_view(request):
 
 def flashcard_view(request, id, title):
     flashcard = get_object_or_404(Flashcard, id=id)
+
+    tags = flashcard.all_tags()
     
     if flashcard.private:
         current_user = request.user
@@ -57,7 +63,8 @@ def flashcard_view(request, id, title):
     context = {
         "flashcard": flashcard,
         "keywords": flashcard.all_cards(),
-        "user": flashcard.user
+        "user": flashcard.user, 
+        "tags": tags,
     }
 
     return HttpResponse(template.render(context, request))

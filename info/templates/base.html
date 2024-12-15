@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sticky Banner Example</title>
+    <title>{% block title %}{% endblock %}</title>
     <style>
         /* Sticky banner styling */
         body, html {
@@ -39,7 +39,7 @@
         }
 
         .content {
-            margin-top: 70px; /* Push content below the sticky banner */
+            margin-top: 40px; /* Push content below the sticky banner */
             padding: 20px;
         }
 
@@ -52,13 +52,15 @@
     <div class="sticky-banner">
         <div class="left-link">
             <a href="/">Home</a>
+            <a href="/tags/glossary">Tags</a>
+            <a href="/flashcards/all">Flashcards</a>
         </div>
         <div class="right-link">
             {% if user.is_anonymous %}
                 <a href="/accounts/login">Login</a>
-        {% else %}
-            <a href="/dashboard">Dashboard</a>
-        {%endif%}
+            {% else %}
+                <a href="/dashboard">Dashboard</a>
+            {%endif%}
         </div>
     </div>
     <div class="content">

@@ -1,47 +1,28 @@
-<html>
-    <head>
-    </head>
-    <body>
-        <style>
-            #logout {
-                float: right
-            }
-            
-            #login {
-                float: right
-            }
+{% extends "base.html"%}
+{%block title%} {{tag.name}} {%endblock%}
+{% block content %}
+{% if user.is_authenticated %}
+<a href="/tags/edit/{{tag.id}}/{{tag.name}}"><button>edit tag</button></a> 
+{% endif %}
 
-        </style>
+<h1>{{tag.name}}</h1>
 
-        <a href="/"><button>Home</button></a>
-        <a href="/tags/glossary"><button>All tags</button></a>
-        {% if user.is_authenticated %}
-        <a href="/tags/edit/{{tag.id}}/{{tag.name}}"><button>edit tag</button></a> 
-        <a id="logout" href="/accounts/logout"><button>logout</button></a>
-        {% endif %}
-        {% if user.is_anonymous %}
-        <a id="login" href="/dashboard"><button>dashboard</button></a>
-        {% endif %}
-        
-        <h1>{{tag.name}}</h1>
+<p>{{tag.details}}</p>
+{% if pages|length > 0 %}
+<h3>Pages:</h3>
+<ul>
+    {% for page in pages %}
+    <li><a href="/page/{{page.id}}/{{page.title}}">{{page.title}}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
 
-        <p>{{tag.details}}</p>
-        {% if pages|length > 0 %}
-        <h3>Pages:</h3>
-        <ul>
-            {% for page in pages %}
-            <li><a href="/page/{{page.id}}/{{page.title}}">{{page.title}}</a></li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-
-        {% if flashcards|length > 0%}
-        <h3> Flashcards: </h3>
-        <ul>
-            {% for card in flashcards %}
-            <li><a href="/flashcard/{{card.id}}/{{card.title}}">{{card.title}}</a></li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </body>
-</html>
+{% if flashcards|length > 0%}
+<h3> Flashcards: </h3>
+<ul>
+    {% for card in flashcards %}
+    <li><a href="/flashcard/{{card.id}}/{{card.title}}">{{card.title}}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

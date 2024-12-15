@@ -1,49 +1,55 @@
-<html>
-    <head>
-        <style>
-            .flashcard {
-              width: 90vw;
-              height: 60vh;
-              border: 1px solid #ccc;
-              padding: 20px;
-              text-align: center;
-              cursor: pointer;
-              margin: 10px;
-            }
-        
-            .back {
-                display: none;
-            }
-          
-            .flip .front {
-                display: none;
-            }
-          
-            .flip .back {
-                display: block;
-            }
-          </style>
+{% extends "base.html" %}
+{% block title%} {{flashcard.title}} {%endblock%}
+{% block content %}
+<style>
+    .flashcard {
+        width: 90vw;
+        height: 40vh;
+        border: 1px solid #ccc;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        margin: 10px;
+    }
 
-          <script>
-            function flipCard(cardId) {
-                var card = document.getElementById(cardId);
-                card.classList.toggle('flip');
-            }
-        </script>
-    </head>
-    <body>
-        <a href="/"><button>home</button></a>
-        <a href="/flashcards/all"><button>All flashcards</button></a>
+    .back {
+        display: none;
+    }
+    
+    .flip .front {
+        display: none;
+    }
+    
+    .flip .back {
+        display: block;
+    }
+    </style>
 
-        <h1> {{flashcard.title}} | <a href="/user/{{user.id}}">{{user.username}}</a></h1>
+    <script>
+    function flipCard(cardId) {
+        var card = document.getElementById(cardId);
+        card.classList.toggle('flip');
+    }
+</script>
 
-        
-        {% for card in keywords %}
-        <div class="flashcard" id="{{card.id}}" onclick="flipCard('{{card.id}}')">
-            <div class="front">{{card.front | linebreaks}} </div>
-            <div class="back"> {{card.back | linebreaks}}</div>
-        </div>
-        {%endfor%}
+<h1> {{flashcard.title}} | <a href="/user/{{user.id}}">{{user.username}}</a></h1>
 
-    </body>
-</html>
+<p> There are {{keywords|length}} cards in this set</p>
+
+{% if tags|length > 0%}
+<h3>Tags:</h3>
+<ul>
+{% for tag in tags %}
+<li><a href="/tag/{{tag.id}}/{{tag.name}}">{{tag.name}}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+
+{% for card in keywords %}
+<div class="flashcard" id="{{card.id}}" onclick="flipCard('{{card.id}}')">
+    <div class="front">{{card.front | linebreaks}} </div>
+    <div class="back"> {{card.back | linebreaks}}</div>
+</div>
+{%endfor%}
+
+{% endblock %}

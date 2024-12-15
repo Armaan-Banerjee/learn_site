@@ -36,9 +36,12 @@
         <form action="/flashcards/add" method="POST">
             <p>Title: <input type="text" name="title"></p>
             <input type="hidden" name="userid" value={{user.id}}>
+            <input type="checkbox" name="private" id="public"  value="private" checked>
+            <label for="private">Private</label> <br>
             <button type="button" onclick="AddCard()">Add card</button>
             <br>
             <div id="keywords"></div>
+            <br>
             <input type="submit" value="submit"> 
         </form>
     </body>
