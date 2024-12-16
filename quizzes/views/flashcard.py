@@ -4,6 +4,8 @@ from django.template import loader
 from ..models import Flashcard, Keyword, Quiz, QuizQuestion, QuizAnswer
 from django.views.decorators.csrf import csrf_exempt
 from info.services.slugs import slugify
+from quizzes.forms import CreateFlashCardTags
+from users.models import User
 # Create your views here.
 
 @csrf_exempt
@@ -16,19 +18,30 @@ def add_flashcard_view(request):
         userid = ""
         cards = []
         private = True
+        tags = []
 
         for key, value in items:
             if key == "title":
                 title = value
             elif key == "userid":
                 userid = value 
+            elif key == "csrfmiddlewaretoken":
+                continue
             elif key == "private":
                 if value != "private":
                     private = False
+            elif key == "tags":
+                form = CreateFlashCardTags(request.POST)
+                if form.is_valid():
+                    selected_tags = form.cleaned_data['tags']  
+                    tags = selected_tags
             else:
                 cards.append(post.getlist(key))
         
         new_flashcard = Flashcard.add_flashcard(title=slugify(title), userid=userid, private=private)
+
+        for tag in tags:
+            new_flashcard.add_tag(tag)
 
         for card in cards:
             front = card[0]
@@ -39,11 +52,15 @@ def add_flashcard_view(request):
 
         #val_cards = [post.getlist(val) for val in cards]
         
-            
+    form = CreateFlashCardTags()
+
+    context = {
+        "form": form,
+    }        
 
     template = loader.get_template("addflashcard.html")
     
-    return HttpResponse(template.render(request=request))
+    return HttpResponse(template.render(context=context, request=request))
 
 
 def flashcard_view(request, id, title):
@@ -63,7 +80,7 @@ def flashcard_view(request, id, title):
     context = {
         "flashcard": flashcard,
         "keywords": flashcard.all_cards(),
-        "user": flashcard.user, 
+        "User_x": flashcard.user, 
         "tags": tags,
     }
 
@@ -85,4 +102,17 @@ def all_flashcards_view(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+def delete_flashcard_view(request):
+    userid = request.GET.get("userid")
+    cardid = request.GET.get("cardid")
+    user_x = get_object_or_404(User, id=userid)
+
+    card = get_object_or_404(Flashcard, id=cardid)
+    if card.user == user_x:
+        card.delete_flashcard()
+        return HttpResponseRedirect("/flashcards/all")
+    else:
+        return HttpResponse(status=403)
+
 

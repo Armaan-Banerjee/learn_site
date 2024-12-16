@@ -3,12 +3,11 @@
         <h1>Hello {{user.username}}</h1>
         <p>You joined on {{user.date_joined}} </p>
 
-        
-        <h3>Bookmarks: </h3>
         {% if bookmarks|length > 0%}
+        <hr><h3>Bookmarks: </h3>
         <ul>
             {% for bookmark in bookmarks %}
-            <li><a href="/page/{{bookmark.page.id}}/from_dashboard">{{bookmark.page.title}}</a></li>
+            <li><a href="/page/{{bookmark.page.id}}/{{bookmark.page.title}}">{{bookmark.page.title}}</a></li>
             {% endfor %}
         </ul>
         {% else %}
@@ -16,17 +15,17 @@
         {% endif %}
 
         {% if comments|length > 0%}
-        <h3>Comments: </h3>
+        <hr><h3>Comments: </h3>
         <ul>
             {% for comment in comments %}
-            <li><a href="/page/{{comment.pages.id}}/from_dashboard">{{comment.text}}</a> on page: {{comment.pages.title}}</li>
+            <li> <a href="/page/{{comment.pages.id}}/{{comment.pages.title}}#{{comment.id}}">{{comment.text|truncatechars:25}}</a> at {{comment.date_created}} </li>
             {%endfor%}
         </ul>
         {% else %}
         <p> Create comments to see them here!</p>
         {%endif%}
-
         {%if flashcards|length > 0%}
+        <hr>
         <h3>Your flashcards: </h3>
         <ul>
             {% for card in flashcards %}

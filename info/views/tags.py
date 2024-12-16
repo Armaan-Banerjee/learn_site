@@ -32,10 +32,10 @@ def show_tag_details(request, name, id):
     tag = get_object_or_404(Tags, id=id)
 
     pages = tag.show_pages()
-    flashcards = tag.show_flashcards()
+    flashcards = tag.flashcards.all()
 
     template = loader.get_template("tag_page.html")
-
+ 
     context = {
         "tag" : tag,
         "pages" : pages,

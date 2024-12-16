@@ -20,9 +20,17 @@ def index(request):
 def public_info(request, id):
     wanted_user = get_object_or_404(User, id=id)
     template = loader.get_template("public_info.html")
+    comments = wanted_user.get_comments()
+    flashcards = wanted_user.get_flashcards()
+    cards = []
+    for card in flashcards:
+        if not card.private:
+            cards.append(card)
 
     context = {
-        "user" : wanted_user
+        "user" : wanted_user, 
+        "comments": comments,
+        "flashcards": cards
     }
 
     return HttpResponse(template.render(context, request))

@@ -24,6 +24,20 @@ def api_quiz_view(request, id):
 
     return JsonResponse(quizdict)
 
+def quiz_view(request, id):
+    quiz = get_object_or_404(Quiz, id=id)
+
+    questions = quiz.all_questions()
+    template = loader.get_template("quizview.html")
+
+    context = {
+        "quiz": quiz,
+        "questions": questions
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
 @csrf_exempt
 def add_quiz(request):
     if request.method == "POST":

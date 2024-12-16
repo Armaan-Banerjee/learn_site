@@ -32,7 +32,7 @@
     }
 </script>
 
-<h1> {{flashcard.title}} | <a href="/user/{{user.id}}">{{user.username}}</a></h1>
+<h1> {{flashcard.title}} | <a href="/user/{{User_x.id}}">{{User_x.username}}</a></h1>
 
 <p> There are {{keywords|length}} cards in this set</p>
 
@@ -52,4 +52,7 @@
 </div>
 {%endfor%}
 
+{% if user.id == User_x.id %}
+<a href="/flashcard/delete?userid={{user.id}}&&cardid={{flashcard.id}}"><button>Delete flashcard</button></a>
+{% endif %}
 {% endblock %}

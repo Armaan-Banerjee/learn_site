@@ -68,7 +68,7 @@ def handle_page_create(request):
 
             for tag in tags:
                 real_t = Tags.objects.get(id=tag)
-                new_page.Tags.add(real_t)
+                new_page.Tags.add(real_t) 
             
             id = new_page.id
             title = new_page.title
@@ -90,7 +90,7 @@ def handle_page_create(request):
         context = {
             "form_tag" : form_tag,
             "form" : form
-        }
+        } 
 
         return HttpResponse(template.render(context, request))
     

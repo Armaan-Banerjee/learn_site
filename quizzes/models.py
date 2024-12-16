@@ -39,6 +39,12 @@ class Flashcard(models.Model):
         new.save()
 
         return new
+    
+    def delete_flashcard(self):
+        for tag in self.tags.all():
+            tag.flashcards.remove(self)
+            tag.save()
+        self.delete()
 
 class Keyword(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

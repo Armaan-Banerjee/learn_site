@@ -1,7 +1,8 @@
 from django import forms 
-from .models import Flashcard
+from info.models import Tags
 
-class CreateFlashCard(forms.Form):
-    title = forms.CharField(max_length=255)
-    user_id = forms.UUIDField
+class CreateFlashCardTags(forms.Form):
+    OPTIONS = Tags.set_all()
+    tags = forms.MultipleChoiceField(help_text="Please enter the name for this tag", widget=forms.CheckboxSelectMultiple,
+    choices=OPTIONS)
     
